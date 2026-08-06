@@ -24,7 +24,7 @@
 | **Componente Curricular** | Inteligência Artificial e Sistemas Inteligentes |
 | **Professor** | Kleyton Hoffmann |
 | **Período Letivo** | 2026/2 |
-| **Acadêmico** | *(preencher)* |
+| **Acadêmicos** | Vitoria Aparecida Vendausen<br>Matheus Dapper Alves Leite |
 
 </div>
 
