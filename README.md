@@ -252,6 +252,8 @@ O domínio é delimitado e verificável: vocabulário técnico restrito e respos
 
 > A documentação do sistema ATENA encontra-se em repositório próprio. Este projeto contempla exclusivamente a construção do modelo de linguagem — o hardware do assistente não integra o presente entregável, e o *fine-tuning* é realizado sobre dados textuais do domínio, sem dependência dos dispositivos físicos.
 
+https://github.com/aCoruja/atena-lab-assistant
+
 ## Reprodutibilidade
 
 ```bash
