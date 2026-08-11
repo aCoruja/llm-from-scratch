@@ -242,17 +242,17 @@ Os resultados são registrados em `experimentos/resultados/` e **discutidos** �
 | Treinamento | Taxa de aprendizado, tamanho de lote, agendamento | 5 |
 | Geração | Temperatura, *top-k* e diversidade do texto gerado | 5 |
 
-## Aplicação: ATENA
+## Aplicação: em Desenvolvimento
 
-Na Sprint 6, dedicada a *fine-tuning* e adaptação a tarefas específicas, o modelo é ajustado para um domínio concreto: **assistência em laboratório de eletrônica**.
+### Sprint 6 — Fine-tuning e Adaptação a Tarefas Específicas
 
-O ATENA é um sistema assistente de bancada, desenvolvido paralelamente, que analisa circuitos em protoboard combinando identificação óptica de componentes com medições elétricas. O modelo de linguagem construído neste projeto atua como sua camada de diálogo, respondendo a perguntas sobre o comportamento do circuito a partir de dados estruturados.
+Na Sprint 6, está sendo estudada a possibilidade de realizar o *fine-tuning* e a adaptação do modelo de linguagem para tarefas ou domínios específicos.
 
-O domínio é delimitado e verificável: vocabulário técnico restrito e respostas de correção objetivamente aferível — condições favoráveis para um modelo de dimensões modestas.
+Nesta etapa, ainda estão sendo avaliadas diferentes possibilidades de aplicação para o modelo, considerando quais áreas poderiam se beneficiar de uma especialização e quais conjuntos de dados poderiam ser utilizados para esse processo. A definição do domínio, das tarefas e da estratégia de *fine-tuning* ainda está em desenvolvimento.
 
-> A documentação do sistema ATENA encontra-se em repositório próprio. Este projeto contempla exclusivamente a construção do modelo de linguagem — o hardware do assistente não integra o presente entregável, e o *fine-tuning* é realizado sobre dados textuais do domínio, sem dependência dos dispositivos físicos.
+O objetivo desta etapa é identificar uma aplicação que permita avaliar, de forma prática, os benefícios da especialização do modelo em comparação ao seu comportamento geral. Entre os critérios considerados estão a disponibilidade e qualidade dos dados, a possibilidade de avaliar objetivamente as respostas e a compatibilidade do domínio escolhido com as capacidades e limitações do modelo.
 
-https://github.com/aCoruja/atena-lab-assistant
+Dessa forma, o *fine-tuning* ainda não é considerado uma etapa concluída, permanecendo como uma possibilidade em investigação dentro do desenvolvimento do projeto. A definição do domínio de aplicação e da metodologia de treinamento será realizada conforme os resultados das análises e experimentações das etapas anteriores.
 
 ## Reprodutibilidade
 
