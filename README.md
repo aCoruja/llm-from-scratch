@@ -260,7 +260,7 @@ Dessa forma, o *fine-tuning* ainda não é considerado uma etapa concluída, per
 git clone <url-do-repositorio>
 cd projeto-llm
 
-python -m venv .venv
+python3.11 -m venv .venv            # requer Python 3.11 (tensorflow ainda não suporta versões mais novas)
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 
 pip install -r requirements.txt
