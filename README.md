@@ -37,7 +37,7 @@
 | [Sobre o projeto](#sobre-o-projeto) | [Cronograma e progresso](#cronograma-e-progresso) |
 | [Objetivo](#objetivo) | [Glossário técnico](#glossário-técnico) |
 | [Corpus e recorte](#corpus-e-recorte) | [Experimentos](#experimentos) |
-| [Além do livro](#além-do-livro) | [Aplicação: ATENA](#aplicação-atena) |
+| [Além do livro](#além-do-livro) | [Aplicação: em Desenvolvimento](#aplicação) |
 | [Escopo e delimitações](#escopo-e-delimitações) | [Reprodutibilidade](#reprodutibilidade) |
 | [Pipeline](#pipeline) | [Uso de IA generativa](#uso-de-ia-generativa) |
 | [Estrutura do repositório](#estrutura-do-repositório) | [Referência principal](#referência-principal) |
