@@ -1,0 +1,519 @@
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Fonts & language ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\shorthandoff{"}
+\usepackage{tgtermes}
+\usepackage{tgadventor}
+\usepackage{tgcursor}
+\usepackage{listings}
+
+% ---------- Layout ----------
+\usepackage[a4paper,top=2.6cm,bottom=2.8cm,left=2.4cm,right=2.4cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks,colorlinks=true,linkcolor=accentblue,urlcolor=accentcyan,citecolor=accentblue]{hyperref}
+\usepackage{parskip}
+\usepackage{microtype}
+
+% ---------- Palette (AI theme) ----------
+\definecolor{bgdark}{HTML}{0A0E1A}
+\definecolor{bgdark2}{HTML}{131A33}
+\definecolor{accentcyan}{HTML}{22D3EE}
+\definecolor{accentblue}{HTML}{3B82F6}
+\definecolor{accentpurple}{HTML}{8B5CF6}
+\definecolor{textlight}{HTML}{E5EDFF}
+\definecolor{textmuted}{HTML}{93A4C3}
+\definecolor{inkdark}{HTML}{111827}
+\definecolor{panelbg}{HTML}{F3F6FD}
+\definecolor{panelframe}{HTML}{C7D2FE}
+
+% ---------- Section styling ----------
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{inkdark}}
+  {\textcolor{accentblue}{\thesection}}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.6em}{0.9em}
+
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{accentblue}}
+  {}{0em}{}
+\titlespacing*{\subsection}{0pt}{1.3em}{0.5em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\sffamily\color{textmuted} Glossário Técnico --- Projeto LLM}
+\fancyhead[R]{\small\sffamily\color{textmuted} \leftmark}
+\fancyfoot[C]{\small\sffamily\color{textmuted} \thepage}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+
+\setlist[itemize]{leftmargin=1.3em,itemsep=0.25em}
+\setlist[enumerate]{leftmargin=1.5em,itemsep=0.3em}
+
+% ---------- Glossary entry box ----------
+\newtcolorbox{termo}[2]{
+  breakable,
+  enhanced,
+  colback=panelbg,
+  colframe=panelframe,
+  boxrule=0.5pt,
+  left=10pt,right=10pt,top=7pt,bottom=7pt,
+  arc=3pt,
+  title={#1 \hfill \normalfont\small\textcolor{accentblue}{#2}},
+  fonttitle=\sffamily\bfseries\color{inkdark},
+  coltitle=inkdark,
+  titlerule=0.4pt,
+  before upper={\parindent0pt},
+}
+
+\newcommand{\campo}[2]{\textbf{\textcolor{accentblue}{#1:}} #2\par\smallskip}
+
+\newtcolorbox{notebox}[1][Observação]{
+  breakable,
+  enhanced,
+  colback=white,
+  colframe=accentpurple,
+  boxrule=0.6pt,
+  left=10pt,right=10pt,top=7pt,bottom=7pt,
+  arc=2pt,
+  borderline west={2.4pt}{0pt}{accentpurple},
+  boxrule=0pt,
+  title={#1},
+  fonttitle=\sffamily\bfseries\small\color{accentpurple},
+  coltitle=accentpurple,
+  attach title to upper={\par\nobreak\smallskip},
+}
+
+\lstdefinestyle{pseudo}{
+  basicstyle=\ttfamily\footnotesize\color{textlight},
+  backgroundcolor=\color{inkdark},
+  frame=single,
+  framerule=0pt,
+  rulecolor=\color{inkdark},
+  framesep=0pt,
+  xleftmargin=10pt,
+  xrightmargin=10pt,
+  framexleftmargin=10pt,
+  framexrightmargin=10pt,
+  framextopmargin=8pt,
+  framexbottommargin=8pt,
+  aboveskip=10pt,
+  belowskip=10pt,
+  showstringspaces=false,
+  breaklines=false,
+  columns=fullflexible,
+  keepspaces=true,
+  literate=%
+    {á}{{\'a}}1 {à}{{\`a}}1 {ã}{{\~a}}1 {â}{{\^a}}1
+    {é}{{\'e}}1 {ê}{{\^e}}1 {í}{{\'i}}1
+    {ó}{{\'o}}1 {õ}{{\~o}}1 {ô}{{\^o}}1
+    {ú}{{\'u}}1 {ü}{{\"u}}1 {ç}{{\c c}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {Ã}{{\~A}}1 {Õ}{{\~O}}1 {Â}{{\^A}}1 {Ê}{{\^E}}1 {Ô}{{\^O}}1 {Ç}{{\c C}}1,
+}
+\lstnewenvironment{pseudocode}{\lstset{style=pseudo}}{}
+
+\begin{document}
+
+% =====================================================
+% CAPA
+% =====================================================
+\begin{titlepage}
+\newgeometry{margin=0cm}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+  \shade[top color=bgdark2, bottom color=bgdark]
+    (current page.north west) rectangle (current page.south east);
+
+  \begin{scope}
+    \pgfmathsetseed{22}
+    \foreach \i in {1,...,42}{
+      \pgfmathsetmacro{\x}{rnd*21-0.5}
+      \pgfmathsetmacro{\y}{rnd*29.7-0.5}
+      \coordinate (n\i) at ($(current page.south west)+(\x,\y)$);
+    }
+    \foreach \k in {1,...,60}{
+      \pgfmathtruncatemacro{\ii}{1+mod(int(rnd*10007),42)}
+      \pgfmathtruncatemacro{\jj}{1+mod(int(rnd*10007),42)}
+      \draw[opacity=0.14,accentcyan,line width=0.3pt] (n\ii) -- (n\jj);
+    }
+  \end{scope}
+  \shade[top color=bgdark2,bottom color=bgdark,opacity=0.55]
+    (current page.north west) rectangle ([yshift=8cm]current page.south east);
+  \foreach \i in {1,...,42}{
+    \fill[accentcyan,opacity=0.55] (n\i) circle (0.6pt);
+  }
+
+  \begin{scope}[shift={($(current page.north)+(0,-3.4)$)}]
+    \draw[accentcyan,line width=0.9pt] (0,0) -- (0.95,0.55);
+    \draw[accentcyan,line width=0.9pt] (0,0) -- (0.95,-0.55);
+    \draw[accentpurple,line width=0.9pt] (0,0) -- (-0.95,0.55);
+    \draw[accentpurple,line width=0.9pt] (0,0) -- (-0.95,-0.55);
+    \draw[accentblue,line width=0.9pt] (0,0) -- (0,1.05);
+    \fill[white] (0,0) circle (3.6pt);
+    \fill[accentcyan] (0.95,0.55) circle (2.6pt);
+    \fill[accentcyan] (0.95,-0.55) circle (2.6pt);
+    \fill[accentpurple] (-0.95,0.55) circle (2.6pt);
+    \fill[accentpurple] (-0.95,-0.55) circle (2.6pt);
+    \fill[accentblue] (0,1.05) circle (2.6pt);
+  \end{scope}
+
+  \node[anchor=north] at ($(current page.north)+(0,-5.4)$)
+    {\sffamily\color{accentcyan}\fontsize{11}{11}\selectfont
+     \MakeUppercase{Glossário Técnico \textbullet\ Sprint 2 \textbullet\ Capítulo 2}};
+
+  \node[anchor=north,align=center,text width=17cm] at ($(current page.north)+(0,-7.1)$)
+    {\sffamily\bfseries\color{white}\fontsize{36}{42}\selectfont
+     Working with Text Data};
+
+  \node[anchor=north,align=center,text width=15cm] at ($(current page.north)+(0,-10.2)$)
+    {\sffamily\color{textlight}\fontsize{15}{20}\selectfont
+     De texto bruto a Token IDs, embeddings e posições:\\ o pré-processamento de dados de um LLM};
+
+  \draw[accentcyan,line width=1pt]
+    ($(current page.north)+(-2.1,-11.7)$) -- ($(current page.north)+(2.1,-11.7)$);
+
+  \node[anchor=north,align=center,text width=17cm] at ($(current page.north)+(0,-12.8)$)
+    {\sffamily\color{textmuted}\fontsize{10}{14}\selectfont
+     TOKENIZAÇÃO \ \textbullet\ \ VOCABULÁRIO \ \textbullet\ \ TOKEN IDS \ \textbullet\ \ EMBEDDINGS \ \textbullet\ \ DATALOADER};
+
+  \draw[textmuted,opacity=0.35,line width=0.5pt]
+    ($(current page.south west)+(2.2,4.6)$) -- ($(current page.south east)+(-2.2,4.6)$);
+
+  \node[anchor=west] at ($(current page.south west)+(2.2,3.35)$)
+    {\sffamily\color{white}\fontsize{12}{14}\selectfont\bfseries Matheus Dapper};
+  \node[anchor=west] at ($(current page.south west)+(2.2,2.7)$)
+    {\sffamily\color{white}\fontsize{12}{14}\selectfont\bfseries Vitória Aparecida Vendausen};
+
+  \node[anchor=east] at ($(current page.south east)+(-2.2,3.7)$)
+    {\sffamily\color{white}\fontsize{12}{14}\selectfont\bfseries 2026};
+  \node[anchor=east] at ($(current page.south east)+(-2.2,3.05)$)
+    {\sffamily\color{textmuted}\fontsize{9.5}{12}\selectfont Sprint 2 --- 27 de agosto};
+
+\end{tikzpicture}
+\restoregeometry
+\end{titlepage}
+
+\pagestyle{empty}
+\tableofcontents
+\clearpage
+\pagestyle{fancy}
+\setcounter{page}{1}
+
+% =====================================================
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+\markboth{Introdução}{}
+
+Este glossário registra os conceitos introduzidos no Capítulo 2 --- \emph{Working with
+Text Data} --- do livro \emph{Build a Large Language Model (From Scratch)}
+(Sebastian Raschka, Manning, 2025), referência principal do Projeto LLM. O objetivo não
+é traduzir os termos da língua inglesa, mas registrar de forma sintética seu
+significado e sua função no pipeline de pré-processamento de dados de um modelo de
+linguagem. O glossário é cumulativo em relação ao produzido na Sprint 1 (ver
+\texttt{LLM\_Glossario\_IA.tex}) e deverá ser reutilizado nas próximas Sprints.
+
+% =====================================================
+\section{Tokenização e tokens}
+
+\begin{termo}{Tokenization}{Tokenização}
+\campo{Definição}{Processo de dividir uma sequência contínua de texto em unidades
+menores e discretas --- os tokens --- que podem ser palavras, partes de palavras,
+sinais de pontuação ou até caracteres/bytes individuais, dependendo do esquema
+utilizado.}
+\campo{Função no modelo}{É a primeira etapa do pipeline: transforma um objeto que a
+rede não sabe processar (uma \emph{string}) em uma sequência de unidades discretas que
+podem, na etapa seguinte, ser mapeadas para números.}
+\campo{Relação com outros conceitos}{Precede a construção do \emph{Vocabulário} e a
+conversão para \emph{Token ID}. No GPT, a tokenização é feita por
+\emph{Byte Pair Encoding (BPE)}, não pela versão simples baseada em regex.}
+\campo{Exemplo}{\texttt{"Hello, do you like tea?"} $\rightarrow$ \texttt{["Hello", ",",
+"do", "you", "like", "tea", "?"]} (tokenização por regex, separando palavras e
+pontuação).}
+\end{termo}
+
+\begin{termo}{Token}{Token}
+\campo{Definição}{Unidade mínima produzida pela tokenização. Pode corresponder a uma
+palavra inteira, a um pedaço de palavra (subword) ou a um sinal de pontuação --- nunca a
+um conceito semântico completo por si só.}
+\campo{Função no modelo}{É a unidade de trabalho de todo o pipeline: o texto deixa de
+ser manipulado como caracteres soltos e passa a ser manipulado como uma sequência de
+tokens, cada um posteriormente associado a um \emph{Token ID} e a um vetor de
+\emph{Embedding (representação vetorial)}.}
+\campo{Relação com outros conceitos}{Um token não carrega significado por si --- seu
+``significado'' computacional só surge depois, quando seu \emph{Token ID} é
+convertido em vetor pela camada de embedding.}
+\campo{Exemplo}{Na frase ``the sunlit terraces'', o BPE do GPT-2 produz os tokens
+\texttt{["the", " sun", "lit", " terr", "aces"]} --- note que ``sunlit'' e ``terraces''
+são quebrados em subpalavras, pois não aparecem inteiras no vocabulário do
+tokenizador.}
+\end{termo}
+
+\begin{termo}{Corpus}{Corpus (de texto)}
+\campo{Definição}{Conjunto de texto bruto utilizado como fonte de dados --- para a
+construção do vocabulário, para a extração de sequências de treinamento, ou para o
+pré-treinamento do modelo.}
+\campo{Função no modelo}{É a matéria-prima de toda a Sprint: sem um corpus não há
+tokens, não há vocabulário e não há sequências de treinamento.}
+\campo{Relação com outros conceitos}{Alimenta diretamente a \emph{Tokenization}; seu
+tamanho (em tokens) determina quantas amostras de \emph{Sequência de treinamento
+(par entrada/alvo)} podem ser extraídas para um dado tamanho de contexto.}
+\campo{Exemplo}{Neste projeto, utiliza-se o texto \emph{``The Verdict''}
+(Edith Wharton, domínio público), o mesmo corpus de exemplo do capítulo, com
+aproximadamente 20\,479 caracteres e 5\,145 tokens BPE.}
+\end{termo}
+
+% =====================================================
+\section{Vocabulário e Token IDs}
+
+\begin{termo}{Vocabulary}{Vocabulário}
+\campo{Definição}{Conjunto de todos os tokens distintos que um tokenizador é capaz de
+reconhecer, organizado como um dicionário que associa cada token a um número inteiro
+único (seu \emph{Token ID}).}
+\campo{Função no modelo}{Define o espaço discreto sobre o qual o modelo opera: todo
+token de entrada precisa existir no vocabulário (ou ser tratado por um token especial)
+para ser convertido em ID, e todo token gerado pelo modelo na saída é, na verdade, um
+índice desse mesmo vocabulário.}
+\campo{Relação com outros conceitos}{Construído a partir dos tokens únicos de um
+\emph{Corpus}; define o tamanho da tabela de \emph{Token embedding}
+(\texttt{vocab\_size} linhas) e do vetor de \emph{logits} produzido na camada final do
+modelo.}
+\campo{Exemplo}{No corpus \emph{The Verdict}, o vocabulário construído a partir dos
+tokens únicos possui 1\,130 entradas; somando os dois tokens especiais
+(\texttt{<|unk|>} e \texttt{<|endoftext|>}), chega a 1\,132. Já o vocabulário BPE do
+GPT-2, fixo e independente do corpus, possui 50\,257 entradas.}
+\end{termo}
+
+\begin{termo}{Token ID}{Token ID (identificador do token)}
+\campo{Definição}{Número inteiro que representa um token dentro do vocabulário --- o
+índice da linha correspondente a esse token na tabela de vocabulário.}
+\campo{Função no modelo}{É a única representação numérica bruta do texto que a rede
+manipula antes da camada de embedding. Serve como índice de consulta (\emph{lookup}) na
+tabela de \emph{Token embedding}.}
+\campo{Relação com outros conceitos}{Obtido a partir de um \emph{Token} via o
+\emph{Vocabulary}; convertido de volta em token pela operação inversa
+(\emph{decoding}); não deve ser confundido com uma representação semântica --- dois IDs
+numericamente próximos (ex.: 5 e 6) não implicam tokens semanticamente relacionados.}
+\campo{Exemplo}{\texttt{"Hello"} $\rightarrow$ Token ID \texttt{15496} no vocabulário
+BPE do GPT-2 (\texttt{tiktoken}, \texttt{encoding="gpt2"}).}
+\end{termo}
+
+\begin{termo}{Special tokens}{Tokens especiais}
+\campo{Definição}{Tokens artificiais, sem correspondência direta no texto original,
+adicionados ao vocabulário para tratar casos que a tokenização normal não resolve. Os
+dois discutidos no capítulo são \texttt{<|unk|>} (\emph{unknown}, para palavras fora do
+vocabulário) e \texttt{<|endoftext|>} (para marcar a fronteira entre documentos
+concatenados).}
+\campo{Função no modelo}{\texttt{<|unk|>} evita que o \emph{Tokenization} falhe
+diante de uma palavra nunca vista; \texttt{<|endoftext|>} evita que o modelo aprenda
+associações espúrias entre o fim de um texto e o início de outro quando vários
+documentos são concatenados em um único fluxo de treinamento.}
+\campo{Relação com outros conceitos}{São entradas adicionais no \emph{Vocabulary},
+recebendo seus próprios \emph{Token ID}; o tokenizador \emph{Byte Pair Encoding
+(BPE)} do GPT, por lidar com qualquer string via subpalavras, normalmente dispensa o
+\texttt{<|unk|>} --- mas mantém o \texttt{<|endoftext|>}.}
+\campo{Exemplo}{\texttt{"Hello, do you like tea?"} contra um vocabulário que não conhece
+``Hello'' produz \texttt{["{}<|unk|>", ",", "do", "you", "like", "tea", "?"]}.}
+\end{termo}
+
+\begin{termo}{Byte Pair Encoding (BPE)}{Codificação por Pares de Bytes}
+\campo{Definição}{Algoritmo de tokenização em nível de subpalavra que constrói seu
+vocabulário mesclando iterativamente os pares de caracteres (ou bytes) mais frequentes
+em um corpus de treinamento, até atingir um tamanho de vocabulário alvo.}
+\campo{Função no modelo}{É o tokenizador efetivamente usado pelo GPT. Por operar em
+subpalavras e, no limite, em bytes individuais, consegue representar qualquer string de
+entrada --- inclusive palavras inventadas ou fora do vocabulário --- sem nunca precisar
+de um token \texttt{<|unk|>}.}
+\campo{Relação com outros conceitos}{Substitui, na prática, o
+\emph{Tokenization} + \emph{Vocabulary} caseiros descritos nas seções iniciais
+do capítulo; implementado neste projeto via a biblioteca \texttt{tiktoken}
+(\texttt{encoding="gpt2"}), com vocabulário fixo de 50\,257 tokens.}
+\campo{Exemplo}{A palavra inventada \texttt{"Akwirw ier"} é quebrada pelo BPE em
+\texttt{["Ak", "w", "ir", "w", " ", "ier"]} --- seis subpalavras que, recombinadas,
+reconstroem exatamente a string original.}
+\end{termo}
+
+% =====================================================
+\clearpage
+\section{Sequências de treinamento}
+
+\begin{termo}{Sliding window}{Janela deslizante}
+\campo{Definição}{Técnica de amostragem que percorre a sequência de Token IDs do corpus
+com uma janela de tamanho fixo (\texttt{max\_length}), avançando um número fixo de
+posições (\texttt{stride}) a cada passo, para extrair múltiplas subsequências de
+treinamento a partir de um único corpus contínuo.}
+\campo{Função no modelo}{É o mecanismo que transforma um corpus (uma longa sequência de
+tokens) em um conjunto de exemplos de treinamento de tamanho fixo, prontos para compor
+lotes (\emph{batches}).}
+\campo{Relação com outros conceitos}{Produz os pares de \emph{Sequência de
+treinamento (par entrada/alvo)}; o \texttt{stride} controla a sobreposição entre
+janelas consecutivas e, junto com o \emph{Context length (tamanho do contexto)},
+determina a quantidade total de amostras geradas.}
+\campo{Exemplo}{Com \texttt{max\_length=4} e \texttt{stride=4} (sem sobreposição), o
+corpus \emph{The Verdict} (5\,145 tokens BPE) produz 1\,286 amostras; com
+\texttt{stride=1} (máxima sobreposição), produziria cerca de 5\,141 amostras.}
+\end{termo}
+
+\begin{termo}{Input--target pair}{Par entrada/alvo (sequência de treinamento)}
+\campo{Definição}{Par de sequências de mesmo tamanho em que o alvo (\emph{target}) é
+exatamente a sequência de entrada (\emph{input}) deslocada em uma posição para a
+direita.}
+\campo{Função no modelo}{Implementa, de forma totalmente automática, a tarefa de
+auto-supervisão do LLM: ``prever o próximo token''. Não é necessária nenhuma rotulação
+manual --- o próprio texto fornece o rótulo de cada posição.}
+\campo{Relação com outros conceitos}{Gerado pela \emph{Sliding window} sobre os
+\emph{Token ID} do corpus; consumido pelo \emph{DataLoader}, que os agrupa em
+lotes (\emph{Batch (lote)}) para alimentar o modelo durante o treinamento.}
+\campo{Exemplo}{Para a sequência de IDs \texttt{[40, 367, 2885, 1464]}: entrada =
+\texttt{[40, 367, 2885]}, alvo = \texttt{[367, 2885, 1464]}. Em texto:
+entrada = \texttt{"I HAD always"}, alvo = \texttt{" HAD always thought"}.}
+\end{termo}
+
+\begin{termo}{Context length}{Tamanho do contexto (janela de contexto)}
+\campo{Definição}{Número máximo de tokens que uma amostra de entrada contém
+simultaneamente --- e, por extensão, o número máximo de tokens anteriores que o modelo
+consegue considerar ao prever o próximo.}
+\campo{Função no modelo}{Determina a dimensão da sequência de entrada e da tabela de
+\emph{Positional embedding}; limita quanto contexto passado o modelo pode usar em
+cada predição.}
+\campo{Relação com outros conceitos}{Parâmetro central da \emph{Sliding window};
+quanto maior o contexto, menos amostras um corpus de tamanho fixo produz (quando o
+\texttt{stride} acompanha o contexto), mas mais informação cada amostra carrega.}
+\campo{Exemplo}{Contexto de 4 tokens gera 1\,286 amostras no corpus de teste; contexto
+de 128 tokens gera apenas 40 amostras a partir do mesmo corpus (ver Seção de
+Experimentos).}
+\end{termo}
+
+\begin{termo}{Dataset}{Conjunto de dados (\texttt{torch.utils.data.Dataset})}
+\campo{Definição}{Estrutura que encapsula a lógica de acesso a um conjunto de amostras
+de treinamento --- no caso deste projeto, a classe \texttt{GPTDatasetV1}, que aplica a
+\emph{Sliding window} sobre o corpus tokenizado e expõe cada par (entrada, alvo)
+por índice.}
+\campo{Função no modelo}{Padroniza a forma como os dados são armazenados e acessados,
+permitindo que o \emph{DataLoader} os agrupe em lotes de forma genérica, sem
+conhecer os detalhes do corpus.}
+\campo{Relação com outros conceitos}{Implementa a interface exigida pelo
+\emph{DataLoader} do PyTorch (\texttt{\_\_len\_\_} e \texttt{\_\_getitem\_\_});
+armazena internamente os \emph{Input--target pair} pré-computados.}
+\campo{Exemplo}{\texttt{GPTDatasetV1(text, tokenizer, max\_length=8, stride=8)} produz
+um objeto com \texttt{len(dataset) == 643} amostras para o corpus de teste.}
+\end{termo}
+
+\begin{termo}{DataLoader}{DataLoader (carregador de dados)}
+\campo{Definição}{Componente do PyTorch (\texttt{torch.utils.data.DataLoader}) que
+envolve um \emph{Dataset} e organiza suas amostras em lotes (\emph{batches}),
+podendo embaralhar (\emph{shuffle}) a ordem das amostras a cada época e paralelizar o
+carregamento.}
+\campo{Função no modelo}{É a interface final entre os dados preparados e o laço de
+treinamento: a cada iteração, entrega um lote de tensores \texttt{(entrada, alvo)}
+prontos para ser processados pela rede.}
+\campo{Relação com outros conceitos}{Consome um \emph{Dataset} (aqui,
+\texttt{GPTDatasetV1}); seu parâmetro \texttt{batch\_size} define o tamanho do
+\emph{Batch (lote)}, e \texttt{drop\_last} controla se o último lote incompleto de
+uma época é descartado.}
+\campo{Exemplo}{\texttt{create\_dataloader\_v1(text, batch\_size=8, max\_length=4,
+stride=4)} produz lotes com \texttt{inputs.shape == (8, 4)}.}
+\end{termo}
+
+\begin{termo}{Batch}{Lote}
+\campo{Definição}{Conjunto de \texttt{batch\_size} amostras de entrada (e seus
+respectivos alvos) agrupadas em um único tensor, processadas simultaneamente por uma
+passagem da rede.}
+\campo{Função no modelo}{Permite explorar o paralelismo de hardware (GPU/CPU) e
+estabiliza a estimativa do gradiente durante o treinamento, ao calcular a perda sobre
+várias amostras de uma vez em vez de uma única amostra isolada.}
+\campo{Relação com outros conceitos}{Produzido pelo \emph{DataLoader}; sua
+dimensão (\texttt{batch\_size}) é o primeiro eixo dos tensores de
+\emph{Token embedding} e \emph{Input embedding}, de forma
+\texttt{(batch\_size, context\_length, output\_dim)}.}
+\campo{Exemplo}{Com \texttt{batch\_size=8} e \texttt{max\_length=4}, cada lote de
+entrada tem forma \texttt{(8, 4)}; após a camada de embedding com
+\texttt{output\_dim=256}, passa a ter forma \texttt{(8, 4, 256)}.}
+\end{termo}
+
+% =====================================================
+\clearpage
+\section{Embeddings e posição}
+
+\begin{termo}{Embedding}{Embedding (representação vetorial densa)}
+\campo{Definição}{Vetor de números reais, de dimensão fixa (\texttt{output\_dim}), que
+representa um objeto discreto (aqui, um token) em um espaço vetorial contínuo. Ao
+contrário do Token ID, os valores do vetor são aprendidos durante o treinamento.}
+\campo{Função no modelo}{Permite que a rede opere sobre representações contínuas e
+diferenciáveis, sobre as quais operações como produto interno e multiplicação de
+matrizes fazem sentido geométrico --- o que não é possível com um índice inteiro
+isolado.}
+\campo{Relação com outros conceitos}{Produzido a partir de um \emph{Token ID} por
+uma \emph{Embedding layer}; a soma do \emph{Token embedding} com o
+\emph{Positional embedding} resulta no \emph{Input embedding}.}
+\campo{Exemplo}{Com \texttt{output\_dim=256}, cada Token ID é mapeado para um vetor de
+256 números reais --- por exemplo, o token de ID 40 (``I'') passa a ser representado
+por um vetor \texttt{[0.34, -1.19, \ldots]} (256 valores) em vez do escalar
+\texttt{40}.}
+\end{termo}
+
+\begin{termo}{Embedding layer}{Camada de embedding (\texttt{nn.Embedding})}
+\campo{Definição}{Camada de rede neural que funciona como uma tabela de consulta
+(\emph{lookup table}) de dimensão \texttt{(vocab\_size, output\_dim)}: dado um Token
+ID, retorna a linha correspondente da tabela. Os valores da tabela são parâmetros
+treináveis, inicializados aleatoriamente.}
+\campo{Função no modelo}{É a ponte entre o mundo discreto dos \emph{Token ID} e o
+mundo contínuo em que a rede neural opera. Equivale, matematicamente, a multiplicar um
+vetor \emph{one-hot} pela matriz de pesos da camada --- mas implementada de forma muito
+mais eficiente, como indexação direta.}
+\campo{Relação com outros conceitos}{Instanciada com \texttt{vocab\_size} igual ao
+tamanho do \emph{Vocabulary} do tokenizador utilizado; sua saída, somada à saída de
+uma segunda \texttt{nn.Embedding} indexada por posição, forma o
+\emph{Input embedding}.}
+\campo{Exemplo}{\texttt{nn.Embedding(50257, 256)} cria uma tabela com
+$50\,257 \times 256 = 12\,865\,792$ parâmetros treináveis --- um por célula da tabela.}
+\end{termo}
+
+\begin{termo}{Positional embedding}{Embedding posicional}
+\campo{Definição}{Vetor, de mesma dimensão do \emph{Token embedding}, que codifica
+exclusivamente a posição de um token dentro da sequência (0, 1, 2, \ldots), e não seu
+conteúdo. Neste projeto, segue a abordagem do GPT: posicionamento absoluto e aprendido,
+via uma segunda \texttt{nn.Embedding} indexada pela posição.}
+\campo{Função no modelo}{Resolve uma limitação fundamental da camada de embedding
+pura: como ela é uma tabela de consulta por Token ID, o mesmo token gera sempre o mesmo
+vetor, não importa em que posição da sequência apareça. Sem informação posicional, o
+modelo enxergaria a sequência como um conjunto (\emph{bag of tokens}), não como uma
+sequência ordenada.}
+\campo{Relação com outros conceitos}{Somado ao \emph{Token embedding} para formar o
+\emph{Input embedding}; sua tabela tem tamanho
+\texttt{(context\_length, output\_dim)}, diferente da tabela de token embeddings, que
+tem tamanho \texttt{(vocab\_size, output\_dim)}.}
+\campo{Exemplo}{O token de ID 40 na posição 0 e o mesmo token de ID 40 na posição 2
+recebem, após a soma posicional, vetores diferentes --- verificado experimentalmente
+em \texttt{src/embeddings.py} (\texttt{vetor\_pos0 != vetor\_pos2}).}
+\end{termo}
+
+\begin{termo}{Input embedding}{Embedding de entrada (token + posição)}
+\campo{Definição}{Soma elemento a elemento entre o \emph{Token embedding} de cada
+posição e o \emph{Positional embedding} correspondente àquela posição. É o vetor
+final que representa cada token da sequência ao entrar nos blocos do Transformer.}
+\campo{Função no modelo}{É literalmente a entrada da arquitetura GPT --- o ponto de
+saída desta Sprint e o ponto de entrada da Sprint seguinte (mecanismo de atenção).
+Carrega simultaneamente informação de conteúdo (o que o token é) e de posição (onde ele
+está na sequência).}
+\campo{Relação com outros conceitos}{Resultado de \emph{Token embedding} +
+\emph{Positional embedding}; tem forma
+\texttt{(batch\_size, context\_length, output\_dim)}, a mesma forma esperada pela
+primeira camada de \emph{self-attention} (Capítulo 3).}
+\campo{Exemplo}{Para um lote com \texttt{batch\_size=8}, \texttt{context\_length=4} e
+\texttt{output\_dim=256}, o \emph{input embedding} tem forma \texttt{(8, 4, 256)}.}
+\end{termo}
+
+\end{document}

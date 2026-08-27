@@ -7,7 +7,7 @@
 **Universidade do Oeste de Santa Catarina — Campus de Joaçaba**
 Área das Ciências Exatas e Tecnológicas
 
-![Status](https://img.shields.io/badge/status-Sprint%201-blue)
+![Status](https://img.shields.io/badge/status-Sprint%202-blue)
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)
 ![Entrega](https://img.shields.io/badge/entrega%20final-03%2F12%2F2026-orange)
@@ -194,11 +194,11 @@ Os componentes implementados em sprints anteriores são reutilizados e integrado
 
 | Data | Sprint | Cap. | Foco | Estado |
 |:--|:--|:--|:--|:--:|
-| 30/07 | 0 | — | Ambiente, Git, PyTorch, estrutura do repositório | ▢ |
-| 06/08 | 1 | 1 | Introdução aos LLMs, glossário, mapa conceitual GPT | ▢ |
-| 13/08 | 1 | 1 | Discussão técnica e **entrega da Sprint 1** | ▢ |
-| 20/08 | 2 | 2 | Tokenização, vocabulário, Token IDs | ▢ |
-| 27/08 | 2 | 2 | Embeddings, positional embeddings, DataLoader | ▢ |
+| 30/07 | 0 | — | Ambiente, Git, PyTorch, estrutura do repositório | ✅ |
+| 06/08 | 1 | 1 | Introdução aos LLMs, glossário, mapa conceitual GPT | ✅ |
+| 13/08 | 1 | 1 | Discussão técnica e **entrega da Sprint 1** | ✅ |
+| 20/08 | 2 | 2 | Tokenização, vocabulário, Token IDs | ✅ |
+| 27/08 | 2 | 2 | Embeddings, positional embeddings, DataLoader e **entrega da Sprint 2** | ✅ |
 | 03/09 | 3 | 3 | Mecanismos de atenção, *self-attention* | ▢ |
 | 10/09 | 3 | 3 | *Scaled dot-product* e *causal attention* | ▢ |
 | 17/09 | 3 | 3 | *Multi-head attention* e comparativos | ▢ |

@@ -1,0 +1,416 @@
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Fonts & language ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\shorthandoff{"}
+\usepackage{tgtermes}
+\usepackage{tgadventor}
+\usepackage{tgcursor}
+\usepackage{listings}
+
+% ---------- Layout ----------
+\usepackage[a4paper,top=2.6cm,bottom=2.8cm,left=2.4cm,right=2.4cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks,colorlinks=true,linkcolor=accentblue,urlcolor=accentcyan,citecolor=accentblue]{hyperref}
+\usepackage{parskip}
+\usepackage{microtype}
+
+% ---------- Palette (AI theme) ----------
+\definecolor{bgdark}{HTML}{0A0E1A}
+\definecolor{bgdark2}{HTML}{131A33}
+\definecolor{accentcyan}{HTML}{22D3EE}
+\definecolor{accentblue}{HTML}{3B82F6}
+\definecolor{accentpurple}{HTML}{8B5CF6}
+\definecolor{textlight}{HTML}{E5EDFF}
+\definecolor{textmuted}{HTML}{93A4C3}
+\definecolor{inkdark}{HTML}{111827}
+\definecolor{panelbg}{HTML}{F3F6FD}
+\definecolor{panelframe}{HTML}{C7D2FE}
+
+% ---------- Section styling ----------
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{inkdark}}
+  {\textcolor{accentblue}{\thesection}}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.6em}{0.9em}
+
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{accentblue}}
+  {}{0em}{}
+\titlespacing*{\subsection}{0pt}{1.3em}{0.5em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\sffamily\color{textmuted} Análise dos Resultados --- Sprint 2}
+\fancyhead[R]{\small\sffamily\color{textmuted} \leftmark}
+\fancyfoot[C]{\small\sffamily\color{textmuted} \thepage}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+
+\setlist[itemize]{leftmargin=1.3em,itemsep=0.25em}
+\setlist[enumerate]{leftmargin=1.5em,itemsep=0.3em}
+
+\newtcolorbox{defbox}[1]{
+  breakable,
+  enhanced,
+  colback=panelbg,
+  colframe=panelframe,
+  boxrule=0.5pt,
+  left=10pt,right=10pt,top=7pt,bottom=7pt,
+  arc=3pt,
+  title={#1},
+  fonttitle=\sffamily\bfseries\color{accentblue},
+  coltitle=accentblue,
+  titlerule=0pt,
+  before upper={\parindent0pt},
+}
+
+\newtcolorbox{notebox}[1][Observação]{
+  breakable,
+  enhanced,
+  colback=white,
+  colframe=accentpurple,
+  boxrule=0.6pt,
+  left=10pt,right=10pt,top=7pt,bottom=7pt,
+  arc=2pt,
+  borderline west={2.4pt}{0pt}{accentpurple},
+  boxrule=0pt,
+  title={#1},
+  fonttitle=\sffamily\bfseries\small\color{accentpurple},
+  coltitle=accentpurple,
+  attach title to upper={\par\nobreak\smallskip},
+}
+
+\newcommand{\questionhead}[2]{%
+  \section*{\textcolor{accentblue}{Questão #1.} #2}
+  \addcontentsline{toc}{section}{Questão #1 --- #2}
+  \markboth{Questão #1}{}
+}
+
+\begin{document}
+
+% =====================================================
+% CAPA
+% =====================================================
+\begin{titlepage}
+\newgeometry{margin=0cm}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+  \shade[top color=bgdark2, bottom color=bgdark]
+    (current page.north west) rectangle (current page.south east);
+
+  \begin{scope}
+    \pgfmathsetseed{37}
+    \foreach \i in {1,...,42}{
+      \pgfmathsetmacro{\x}{rnd*21-0.5}
+      \pgfmathsetmacro{\y}{rnd*29.7-0.5}
+      \coordinate (n\i) at ($(current page.south west)+(\x,\y)$);
+    }
+    \foreach \k in {1,...,60}{
+      \pgfmathtruncatemacro{\ii}{1+mod(int(rnd*10007),42)}
+      \pgfmathtruncatemacro{\jj}{1+mod(int(rnd*10007),42)}
+      \draw[opacity=0.14,accentcyan,line width=0.3pt] (n\ii) -- (n\jj);
+    }
+  \end{scope}
+  \shade[top color=bgdark2,bottom color=bgdark,opacity=0.55]
+    (current page.north west) rectangle ([yshift=8cm]current page.south east);
+  \foreach \i in {1,...,42}{
+    \fill[accentcyan,opacity=0.55] (n\i) circle (0.6pt);
+  }
+
+  \begin{scope}[shift={($(current page.north)+(0,-3.4)$)}]
+    \draw[accentcyan,line width=0.9pt] (0,0) -- (0.95,0.55);
+    \draw[accentcyan,line width=0.9pt] (0,0) -- (0.95,-0.55);
+    \draw[accentpurple,line width=0.9pt] (0,0) -- (-0.95,0.55);
+    \draw[accentpurple,line width=0.9pt] (0,0) -- (-0.95,-0.55);
+    \draw[accentblue,line width=0.9pt] (0,0) -- (0,1.05);
+    \fill[white] (0,0) circle (3.6pt);
+    \fill[accentcyan] (0.95,0.55) circle (2.6pt);
+    \fill[accentcyan] (0.95,-0.55) circle (2.6pt);
+    \fill[accentpurple] (-0.95,0.55) circle (2.6pt);
+    \fill[accentpurple] (-0.95,-0.55) circle (2.6pt);
+    \fill[accentblue] (0,1.05) circle (2.6pt);
+  \end{scope}
+
+  \node[anchor=north] at ($(current page.north)+(0,-5.4)$)
+    {\sffamily\color{accentcyan}\fontsize{11}{11}\selectfont
+     \MakeUppercase{Sprint 2 \textbullet\ Capítulo 2 \textbullet\ Análise dos Resultados}};
+
+  \node[anchor=north,align=center,text width=17cm] at ($(current page.north)+(0,-7.1)$)
+    {\sffamily\bfseries\color{white}\fontsize{34}{40}\selectfont
+     Do Texto Bruto\\à Entrada do Modelo};
+
+  \node[anchor=north,align=center,text width=15cm] at ($(current page.north)+(0,-10.2)$)
+    {\sffamily\color{textlight}\fontsize{15}{20}\selectfont
+     Implementação e experimentação do pipeline de pré-processamento\\ de dados de um LLM};
+
+  \draw[accentcyan,line width=1pt]
+    ($(current page.north)+(-2.1,-11.7)$) -- ($(current page.north)+(2.1,-11.7)$);
+
+  \node[anchor=north,align=center,text width=17cm] at ($(current page.north)+(0,-12.8)$)
+    {\sffamily\color{textmuted}\fontsize{10}{14}\selectfont
+     TOKENIZAÇÃO \ \textbullet\ \ TOKEN IDS \ \textbullet\ \ EMBEDDINGS \ \textbullet\ \ POSITIONAL EMBEDDINGS \ \textbullet\ \ DATALOADER};
+
+  \draw[textmuted,opacity=0.35,line width=0.5pt]
+    ($(current page.south west)+(2.2,4.6)$) -- ($(current page.south east)+(-2.2,4.6)$);
+
+  \node[anchor=west] at ($(current page.south west)+(2.2,3.35)$)
+    {\sffamily\color{white}\fontsize{12}{14}\selectfont\bfseries Matheus Dapper};
+  \node[anchor=west] at ($(current page.south west)+(2.2,2.7)$)
+    {\sffamily\color{white}\fontsize{12}{14}\selectfont\bfseries Vitória Aparecida Vendausen};
+
+  \node[anchor=east] at ($(current page.south east)+(-2.2,3.7)$)
+    {\sffamily\color{white}\fontsize{12}{14}\selectfont\bfseries 2026};
+  \node[anchor=east] at ($(current page.south east)+(-2.2,3.05)$)
+    {\sffamily\color{textmuted}\fontsize{9.5}{12}\selectfont Sprint 2 --- 27 de agosto};
+
+\end{tikzpicture}
+\restoregeometry
+\end{titlepage}
+
+\pagestyle{empty}
+\tableofcontents
+\clearpage
+\pagestyle{fancy}
+\setcounter{page}{1}
+
+% =====================================================
+\section*{Sobre este documento}
+\addcontentsline{toc}{section}{Sobre este documento}
+\markboth{Sobre este documento}{}
+
+Este documento apresenta a análise técnica dos resultados obtidos na Sprint 2 do
+Projeto LLM, referente ao Capítulo 2 --- \emph{Working with Text Data} --- do livro
+\emph{Build a Large Language Model (From Scratch)} (Raschka, 2025). A implementação
+completa encontra-se em \texttt{src/} (tokenização, vocabulário, dataset, embeddings) e
+os experimentos, em \texttt{experiments/run\_experiments.py}, cujos resultados brutos
+estão em \texttt{experiments/resultados\_experimentos.md}. Os valores numéricos citados
+abaixo foram extraídos diretamente dessa execução, sobre o corpus de referência do
+capítulo (\emph{The Verdict}, de Edith Wharton --- 20\,479 caracteres, 5\,145 tokens
+BPE).
+
+% =====================================================
+\questionhead{1}{Por que um LLM não pode trabalhar diretamente com o texto bruto?}
+
+Uma rede neural, em sua essência, é uma composição de operações matemáticas --- somas,
+produtos matriciais, funções não lineares --- que operam sobre tensores de números
+reais. Uma \emph{string} de caracteres não é uma estrutura numérica: não há uma
+operação de ``multiplicar'' ou ``somar'' definida entre as palavras ``gato'' e
+``cachorro''. É necessário, portanto, um pipeline de conversão que traduza texto em
+estrutura numérica antes de qualquer camada da rede poder processá-lo.
+
+Esse pipeline é exatamente o assunto desta Sprint: \emph{Tokenização} $\rightarrow$
+\emph{Token IDs} $\rightarrow$ \emph{Embeddings}. Cada etapa reduz uma forma de
+representação a outra mais tratável computacionalmente, até chegar a um tensor
+contínuo --- o \emph{input embedding} --- que de fato serve de entrada aos blocos do
+Transformer.
+
+% =====================================================
+\questionhead{2}{Qual é a função do vocabulário?}
+
+O vocabulário é o dicionário finito que define \emph{todos} os tokens que o modelo é
+capaz de reconhecer, associando cada um a um Token ID único. Ele cumpre um papel duplo:
+
+\begin{itemize}
+  \item \textbf{Na entrada}, é o que permite converter qualquer texto em uma sequência
+        de inteiros --- sem vocabulário, não há como decidir que número representa
+        cada token;
+  \item \textbf{Na saída}, define a dimensão do vetor de \emph{logits} produzido pela
+        última camada do modelo: prever o ``próximo token'' significa, na prática,
+        prever uma distribuição de probabilidade sobre todas as entradas do
+        vocabulário.
+\end{itemize}
+
+No experimento realizado, o vocabulário construído a partir do corpus \emph{The
+Verdict} (tokens únicos, ordenados alfabeticamente) possui 1\,130 entradas --- 1\,132
+somando os tokens especiais \texttt{<|unk|>} e \texttt{<|endoftext|>}. Já o vocabulário
+BPE do GPT-2, fixo e independente do corpus, possui 50\,257 entradas. Essa diferença de
+mais de 40x ilustra a diferença entre um vocabulário \emph{ad hoc} (dependente do
+corpus de treino) e um vocabulário de subpalavras genérico, construído uma única vez
+sobre um corpus massivo e reutilizável para qualquer texto em inglês.
+
+% =====================================================
+\questionhead{3}{Qual é a diferença entre um token e um Token ID?}
+
+O \textbf{token} é a unidade textual --- uma \emph{string} como \texttt{"the"},
+\texttt{"sun"} ou \texttt{","} --- produzida pela tokenização. O \textbf{Token ID} é o
+número inteiro que representa esse token dentro de um vocabulário específico: é o
+índice da linha correspondente na tabela de vocabulário.
+
+A relação não é intrínseca ao token, mas depende do vocabulário usado: o mesmo token
+\texttt{"the"} pode ter o ID 262 no vocabulário BPE do GPT-2 e um ID completamente
+diferente no vocabulário construído a partir de \emph{The Verdict}. O token é a unidade
+\emph{linguística}; o Token ID é a unidade \emph{computacional} --- só faz sentido em
+relação ao vocabulário que o define.
+
+% =====================================================
+\questionhead{4}{Por que os Token IDs não são utilizados diretamente como representação semântica?}
+
+Um Token ID é apenas um índice arbitrário de posição em uma tabela --- geralmente
+atribuído por ordem alfabética ou por frequência de mesclagem, no caso do BPE. Não há
+nenhuma relação matemática pretendida entre a magnitude ou proximidade de dois IDs e a
+proximidade semântica dos tokens que eles representam.
+
+Por exemplo, no vocabulário construído neste projeto, os tokens \texttt{"!"} (ID 0) e
+\texttt{"\%"} (ID muito próximo, adjacente na ordenação alfabética de símbolos) estão
+numericamente vizinhos apenas por coincidência de ordenação --- não por qualquer
+relação de sentido. Se a rede usasse o ID diretamente como entrada numérica de uma
+camada linear, ela seria forçada a interpretar ``304 é mais parecido com 305 do que com
+9000'' como um fato semântico, o que é falso e arbitrário. É exatamente esse problema
+que a camada de \emph{Embedding} resolve: substitui o índice por um vetor
+treinável, cujas distâncias no espaço vetorial \emph{podem} ser aprendidas para refletir
+relações reais de uso e significado.
+
+% =====================================================
+\questionhead{5}{Qual é a função dos embeddings?}
+
+O embedding troca a representação de índice inteiro por um vetor denso de números
+reais, de dimensão fixa (\texttt{output\_dim}). Esse vetor é um parâmetro
+\emph{treinável} da rede --- inicializado aleatoriamente e ajustado durante o
+treinamento --- e é sobre ele, e não mais sobre o Token ID bruto, que as camadas
+seguintes (atenção, \emph{feed-forward}) efetivamente operam.
+
+No experimento com \texttt{output\_dim=256}, cada Token ID (um único inteiro) passa a
+ser representado por um vetor de 256 valores reais. A tabela de embeddings completa,
+para o vocabulário do GPT-2, tem $50\,257 \times 256 = 12\,865\,792$ parâmetros
+treináveis --- ou seja, mais de 12,8 milhões de números só para mapear tokens em
+vetores, antes mesmo de qualquer bloco de atenção existir. Esse número escala
+linearmente com \texttt{output\_dim}: com 16 dimensões, a mesma tabela cai para
+804\,112 parâmetros; com 768 dimensões (padrão do GPT-2 pequeno), sobe para
+38\,597\,376.
+
+% =====================================================
+\questionhead{6}{Por que é necessário representar a posição dos tokens?}
+
+A camada de embedding é uma tabela de consulta indexada por Token ID: o mesmo token
+gera sempre o mesmo vetor, \emph{independentemente da posição em que aparece na
+sequência}. Sem uma correção para isso, o modelo enxergaria a entrada como um
+\emph{conjunto} de tokens (um \emph{bag of tokens}), não como uma sequência ordenada
+--- e ``o cachorro mordeu o homem'' se tornaria indistinguível de ``o homem mordeu o
+cachorro''.
+
+O \emph{positional embedding} resolve isso somando, a cada token embedding, um segundo
+vetor que depende apenas da posição (0, 1, 2, \ldots) dentro do contexto, obtido de uma
+segunda tabela treinável de tamanho \texttt{(context\_length, output\_dim)}. O
+experimento em \texttt{src/embeddings.py} confirma isso diretamente: o mesmo Token ID
+(40) somado ao positional embedding da posição 0 produz um vetor diferente do mesmo
+Token ID somado ao positional embedding da posição 2 (\texttt{vetor\_pos0 !=
+vetor\_pos2}). É essa soma --- \emph{Input embedding} = token embedding + positional
+embedding --- que efetivamente entra nos blocos do Transformer.
+
+% =====================================================
+\questionhead{7}{Qual é a relação entre tamanho do contexto e quantidade de amostras de treinamento?}
+
+Para um corpus de tamanho fixo, quanto maior o tamanho do contexto (\texttt{max\_length}),
+menos amostras de treinamento são extraídas pela janela deslizante, quando o
+\texttt{stride} acompanha o \texttt{max\_length} (sem sobreposição). A relação é
+aproximadamente inversa: $\text{amostras} \approx (N - \text{ctx}) / \text{ctx}$, onde
+$N$ é o número total de tokens do corpus.
+
+Os resultados obtidos sobre o corpus de teste ($N = 5\,145$ tokens BPE) confirmam essa
+relação:
+
+\begin{center}
+\begin{tabularx}{0.85\textwidth}{@{}cccc@{}}
+\toprule
+\textbf{Contexto (\texttt{max\_length})} & \textbf{4} & \textbf{32} & \textbf{128} \\
+\midrule
+Amostras geradas (\texttt{stride=ctx}) & 1\,286 & 160 & 40 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Ou seja, multiplicar o contexto por 32 (de 4 para 128) dividiu o número de amostras por
+aproximadamente 32. Além disso, o parâmetro \texttt{stride} modula essa relação de
+forma independente: fixando o contexto em 32 e variando o \texttt{stride} de 32 (sem
+sobreposição) para 8 (75\% de sobreposição entre janelas), o número de amostras sobe de
+160 para 640 --- quatro vezes mais, à custa de conteúdo redundante entre amostras
+vizinhas. Há, portanto, um compromisso entre \textbf{quantidade} de amostras e
+\textbf{diversidade} (independência estatística) entre elas.
+
+% =====================================================
+\questionhead{8}{Qual é o impacto da dimensão do embedding sobre as estruturas utilizadas pelo modelo?}
+
+A dimensão do embedding (\texttt{output\_dim}) determina o tamanho do último eixo de
+todo tensor produzido a partir daí no pipeline: o \emph{input embedding} tem forma
+\texttt{(batch\_size, context\_length, output\_dim)}. Aumentar \texttt{output\_dim} não
+altera o número de tokens processados, mas aumenta:
+
+\begin{itemize}
+  \item o número de parâmetros treináveis nas tabelas de embedding, de forma linear
+        (\texttt{vocab\_size} $\times$ \texttt{output\_dim} para a tabela de tokens);
+  \item o custo computacional (tempo) de cada consulta/soma, também de forma
+        aproximadamente linear, como observado no experimento: de 16 para 768
+        dimensões, o tempo de montagem do \emph{input embedding} para o mesmo lote
+        cresceu de 0,138\,ms para 1,388\,ms --- um fator de aproximadamente 10x, contra
+        um fator de 48x no número de dimensões, o que sugere que, nessa escala
+        pequena, outros custos fixos (indexação, alocação) ainda dominam o tempo
+        total;
+  \item a quantidade de memória necessária para armazenar cada representação
+        intermediária.
+\end{itemize}
+
+Na prática, \texttt{output\_dim} é a principal alavanca de capacidade representacional
+do modelo nesta etapa: dimensões maiores permitem capturar relações semânticas mais
+ricas entre tokens, ao custo de mais parâmetros e mais computação --- o mesmo
+compromisso que, em escala muito maior, explica por que modelos GPT maiores (com
+\texttt{output\_dim} de 768 a mais de 12\,000) são simultaneamente mais capazes e mais
+custosos.
+
+% =====================================================
+\questionhead{9}{Qual é a função do DataLoader no pipeline?}
+
+O \texttt{DataLoader} do PyTorch é a camada de organização entre o \emph{Dataset} (que
+sabe produzir um par entrada/alvo por índice) e o laço de treinamento (que precisa
+consumir lotes de exemplos). Suas responsabilidades específicas, observadas na
+implementação (\texttt{src/dataset.py}), são:
+
+\begin{itemize}
+  \item \textbf{Agrupar} \texttt{batch\_size} amostras individuais em um único tensor,
+        de forma \texttt{(batch\_size, context\_length)} --- por exemplo,
+        \texttt{batch\_size=8} produz lotes de forma \texttt{(8, 4)} para
+        \texttt{max\_length=4};
+  \item \textbf{Embaralhar} (\texttt{shuffle=True}) a ordem das amostras a cada época,
+        evitando que o modelo aprenda uma ordem espúria de apresentação dos dados;
+  \item \textbf{Descartar} o último lote incompleto de uma época
+        (\texttt{drop\_last=True}), garantindo que todos os lotes tenham exatamente o
+        mesmo formato, o que simplifica e acelera o treinamento em GPU.
+\end{itemize}
+
+Sem o \texttt{DataLoader}, seria necessário implementar manualmente a lógica de
+particionamento, embaralhamento e formatação em lote --- o que o torna, na prática, o
+componente que efetivamente conecta os dados preparados ao restante da arquitetura.
+
+% =====================================================
+\questionhead{10}{Quais informações produzidas nesta Sprint serão utilizadas pelo mecanismo de atenção da Sprint seguinte?}
+
+O artefato final produzido por esta Sprint é o \emph{input embedding}: um tensor de
+forma \texttt{(batch\_size, context\_length, output\_dim)}, resultado da soma entre o
+token embedding e o positional embedding de cada posição. É exatamente esse tensor que
+o Capítulo 3 (\emph{Coding Attention Mechanisms}) toma como ponto de partida.
+
+O mecanismo de self-attention projeta cada vetor de entrada em três papéis
+--- \emph{query}, \emph{key} e \emph{value} --- por meio de matrizes de peso treináveis
+aplicadas sobre esse mesmo \texttt{output\_dim}. Ou seja, a dimensão de embedding
+escolhida nesta Sprint (por exemplo, 256) se torna diretamente a dimensão de entrada das
+matrizes de projeção da Sprint 3. Da mesma forma, o \texttt{context\_length} usado aqui
+para montar as sequências de treinamento define o tamanho da matriz de pontuações de
+atenção ($\text{context\_length} \times \text{context\_length}$) e da máscara causal que
+impede cada posição de ``ver'' tokens futuros. Em resumo, a Sprint 2 entrega tanto o
+\textbf{conteúdo} (via token embedding) quanto o \textbf{contexto posicional} (via
+positional embedding) que o mecanismo de atenção precisará ponderar dinamicamente na
+Sprint 3.
+
+\end{document}
