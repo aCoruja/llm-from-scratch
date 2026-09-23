@@ -1,8 +1,6 @@
 # Sprint 03 — Análise dos resultados
 
 **Capítulo:** 3 — *Coding Attention Mechanisms*.  
-Versão em PDF com o mesmo conteúdo, diagramada: `docs/sprint-03/Analise_Sprint3.pdf`.  
-Todos os valores citados abaixo vêm da execução registrada em [`experimentos/resultados/sprint-03-experimentos.md`](../../experimentos/resultados/sprint-03-experimentos.md) e do notebook [`experimentos/notebooks/sprint-03-experimentos.ipynb`](../../experimentos/notebooks/sprint-03-experimentos.ipynb).
 
 ---
 
