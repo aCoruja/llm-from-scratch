@@ -49,12 +49,5 @@ Onde:
 | **Atenção Causal** | Restrição autorregressiva que impede que tokens correntes consultem informações futuras. |
 | **Truque do $-\infty$** | Preenchimento de posições com `-torch.inf` para que o Softmax resulte exatamente em probabilidade $0$. |
 | **Vazamento de Informação** | Garantia analítica de que tokens posteriores não exercem influência residual sobre estados passados. |
-| **Attention Dropout** | Regularização estocástica sobre os pesos de atenção normalizados durante o treinamento. |
-| **`register_buffer`** | Registro de tensores não treináveis (como a máscara) vinculados ao ciclo de vida e dispositivo do modelo. |
-| **Multi-Head Attention (MHA)** | Divisão do espaço latente em múltiplos cabeçotes para aprendizado concorrente de diferentes relações sintáticas. |
-| **Abordagem Wrapper** | Implementação didática por empilhamento de instâncias com laços sequenciais. |
-| **Divisão de Pesos (*Weight Splits*)** | Implementação de produção via tensores 4D e uma única projeção linear unificada. |
-| **`head_dim`** | Dimensão interna de cada cabeçote, calculada por $d_{\text{out}} // \text{num\_heads}$. |
-| **Batched Matmul 4D** | Multiplicação matricial paralela nos eixos $[B, \text{num\_heads}, T, \text{head\_dim}]$. |
 | **Projeção de Saída (`out_proj`)** | Camada linear final que combina e integra as representações dos múltiplos cabeçotes. |
 
