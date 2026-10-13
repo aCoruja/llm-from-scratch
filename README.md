@@ -199,10 +199,10 @@ Os componentes implementados em sprints anteriores são reutilizados e integrado
 | 13/08 | 1 | 1 | Discussão técnica e **entrega da Sprint 1** | ✅ |
 | 20/08 | 2 | 2 | Tokenização, vocabulário, Token IDs | ✅ |
 | 27/08 | 2 | 2 | Embeddings, positional embeddings, DataLoader e **entrega da Sprint 2** | ✅ |
-| 03/09 | 3 | 3 | Mecanismos de atenção, *self-attention* | ▢ |
-| 10/09 | 3 | 3 | *Scaled dot-product* e *causal attention* | ▢ |
-| 17/09 | 3 | 3 | *Multi-head attention* e comparativos | ▢ |
-| 24/09 | 3 | 3 | Integração da atenção e **entrega da Sprint 3** | ▢ |
+| 03/09 | 3 | 3 | Mecanismos de atenção, *self-attention* | ✅ |
+| 10/09 | 3 | 3 | *Scaled dot-product* e *causal attention* | ✅ |
+| 17/09 | 3 | 3 | *Multi-head attention* e comparativos | ✅ |
+| 24/09 | 3 | 3 | Integração da atenção e **entrega da Sprint 3** | ✅ |
 | 15/10 | 4 | 4 | *Transformer block*, *layer norm*, *feed-forward* | ▢ |
 | 22/10 | 4 | 4 | Conexões residuais e construção do GPT | ▢ |
 | 29/10 | 4 | 4 | Inferência, geração e **entrega da Sprint 4** | ▢ |
