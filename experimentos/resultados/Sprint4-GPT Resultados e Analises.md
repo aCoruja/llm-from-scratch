@@ -220,4 +220,4 @@ Os experimentos executados demonstram a robustez da arquitetura GPT implementada
 * A conformidade dos limites de incerteza da amostragem com os axiomas da Teoria da Informação de Shannon;
 * A operabilidade de ponta a ponta do pipeline autoregressivo para entradas em língua portuguesa.
 
-A base estrutural da rede encontra-se matematicamente consolidada e validada para a subsequente fase de **treinamento com Cross-Entropy Loss na Sprint 05**.
+
