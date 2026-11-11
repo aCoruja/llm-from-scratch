@@ -1,5 +1,5 @@
 """
-Módulo de Avaliação de Perda e Perplexidade (Entregável 2)
+Módulo de Avaliação de Perda e Perplexidade 
 """
 import math
 import torch
