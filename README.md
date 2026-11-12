@@ -206,8 +206,8 @@ Os componentes implementados em sprints anteriores são reutilizados e integrado
 | 15/10 | 4 | 4 | *Transformer block*, *layer norm*, *feed-forward* | ▢ |
 | 22/10 | 4 | 4 | Conexões residuais e construção do GPT | ▢ |
 | 29/10 | 4 | 4 | Inferência, geração e **entrega da Sprint 4** | ▢ |
-| 05/11 | 5 | 5 | Treinamento, função de perda, otimizadores | ▢ |
-| 12/11 | 5 | 5 | Avaliação do treinamento e hiperparâmetros | ▢ |
+| 05/11 | 5 | 5 | Treinamento, função de perda, otimizadores | ✅ |
+| 12/11 | 5 | 5 | Avaliação do treinamento e hiperparâmetros e **entrega da Sprint 5** | ✅ |
 | 19/11 | 6 | 6 e 7 | *Fine-tuning* e integração final | ▢ |
 | **03/12** | — | — | **Entrega final**: repositório, glossário, relatório | ▢ |
 

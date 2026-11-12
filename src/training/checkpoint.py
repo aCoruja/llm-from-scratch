@@ -71,7 +71,12 @@ def load_checkpoint(path, model_class, device=None):
         raise FileNotFoundError(f"Checkpoint não encontrado: '{path}'")
 
     print(f"Carregando checkpoint de '{path}'...")
-    checkpoint = torch.load(path, map_location=device)
+    # weights_only=False: o checkpoint guarda o dicionário de configuração e a
+    # versão do PyTorch (objetos Python), além dos pesos. A partir do PyTorch 2.6
+    # o padrão de torch.load passou a ser weights_only=True, que recusaria esse
+    # conteúdo. Carregamos com weights_only=False por ser um checkpoint próprio e
+    # confiável, gerado por save_checkpoint() neste mesmo repositório.
+    checkpoint = torch.load(path, map_location=device, weights_only=False)
 
     if "config" not in checkpoint or "model_state_dict" not in checkpoint:
         raise ValueError(
