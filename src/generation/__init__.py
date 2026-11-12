@@ -15,6 +15,8 @@ from src.generation.strategies import (
     generate_with_temperature,
     generate_top_k,
     run_comparison,
+    compare_weights,
+    distinct_n,
 )
 
 __all__ = [
@@ -29,4 +31,6 @@ __all__ = [
     "generate_with_temperature",
     "generate_top_k",
     "run_comparison",
+    "compare_weights",
+    "distinct_n",
 ]
